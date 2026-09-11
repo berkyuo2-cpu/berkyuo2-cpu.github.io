@@ -12,18 +12,18 @@
   <main>
     <p class="eyebrow">Pratikhane · uzaktan geliştirme</p>
     <h1>Hafta sonu kumanda</h1>
-    <p>Evde değilsen Cursor’u telefondan yönetmenin yolu resmi Cloud Agent yüzeyleridir. Bu sayfa onları tek yerde toplar; tarayıcıdan Cursor API anahtarı istemez.</p>
+    <p>Bu sayfa canlıdır. 3 günlük uzaklıkta Cursor’u telefondan yönetmek için resmi yol <a href="https://cursor.com/agents">cursor.com/agents</a>. Evdeki masaüstü Chrome ve E:\ diski buradan açılmaz.</p>
 
     <section aria-labelledby="durum-baslik">
       <h2 id="durum-baslik">Kurulum durumu</h2>
       <ul class="status">
+        <li><strong>Bu panel:</strong> canlı — <a href="https://berkyuo2-cpu.github.io/kumanda/">berkyuo2-cpu.github.io/kumanda/</a> (önceki 404, PR main’e girmemişti; 11 Eyl 2026 15:49 UTC’de yayınlandı).</li>
         <li><strong>Hemen hazır:</strong> <a href="https://cursor.com/agents">cursor.com/agents</a> — telefon tarayıcısından ajan başlat, izle, follow-up at.</li>
-        <li><strong>iPhone:</strong> Cursor iOS uygulaması (iOS 26+). Android uygulaması henüz yok; Android’de web kullan.</li>
-        <li><strong>Ev PC worker:</strong> bu kurulum anında bağlı worker yoktu. Bilgisayar kapalı veya uyku modundaysa E:\ üzerindeki yerelde kalan dosyalara Cloud Agent giremez.</li>
-        <li><strong>GitHub’daki projeler:</strong> Cloud Agent yalnız GitHub’a bağlı repolarda kod yazar. Public üç repo aşağıda listelenir.</li>
-        <li><strong>Cursor API CORS:</strong> <code>api.cursor.com</code> tarayıcıdan yalnızca <code>cursor.com</code> kökenine izin veriyor. Bu GitHub Pages sayfası anahtar toplayıp API çağırmaz.</li>
-        <li><strong>GitHub Action API yolu:</strong> PR main’e girdikten ve <code>CURSOR_API_KEY</code> secret eklendikten sonra çalışır.</li>
-        <li><strong>E-posta SMTP:</strong> AUTH_REQUIRED — bu ortamda mail sunucusu yok. Sonuç Cursor ajanı ve GitHub PR bildirimiyle gelir.</li>
+        <li><strong>iPhone:</strong> Cursor iOS (iOS 26+). Android uygulaması yok; Android’de web kullan.</li>
+        <li><strong>Ev PC / Chrome:</strong> BLOCKED — bağlı worker 0. 100 km uzaktan evdeki Chrome onay penceresine tıklanamaz; Remote Debugging (9222) bu Cloud Agent’a açık değil.</li>
+        <li><strong>GitHub’daki projeler:</strong> Cloud Agent yalnız GitHub’a bağlı repolarda kod yazar. Public üç repo aşağıda.</li>
+        <li><strong>GitHub Action:</strong> workflow main’de. <code>CURSOR_API_KEY</code> secret yoksa AUTH_REQUIRED. Anahtarı sohbete yapıştırma.</li>
+        <li><strong>E-posta SMTP:</strong> AUTH_REQUIRED. Sonuç Cursor ajanı ve GitHub bildirimiyle gelir.</li>
       </ul>
     </section>
 
@@ -82,7 +82,7 @@
       <ol class="steps">
         <li>Cursor Dashboard → API Keys: kullanıcı anahtarı üret. Anahtarı sohbete yapıştırma.</li>
         <li>GitHub → bu repo → Settings → Secrets and variables → Actions: isim <code>CURSOR_API_KEY</code>.</li>
-        <li>Bu PR main’e girdikten sonra Action sayfasından <strong>Run workflow</strong>.</li>
+        <li>Action sayfasından <strong>Run workflow</strong> (secret yoksa iş AUTH_REQUIRED ile durur).</li>
         <li><code>launch</code> yeni ajan, <code>followup</code> mevcut <code>bc-...</code> kimliğine devam, <code>list</code> ajanları listeler. Repo sahibi yalnız <code>berkyuo2-cpu</code> olabilir.</li>
       </ol>
       <div class="actions">
@@ -92,8 +92,8 @@
     </section>
 
     <section aria-labelledby="ev-baslik">
-      <h2 id="ev-baslik">Ev bilgisayarı (gitmeden önce)</h2>
-      <p>Yalnızca PC açık, uyanık ve internette kalacaksa yereldeki projeler uzaktan yönetilir. Bu Cloud Agent ev PC’ye bağlanamaz; worker’ı sen başlatırsın.</p>
+      <h2 id="ev-baslik">Ev bilgisayarı</h2>
+      <p>3 günlük yoklukta ev PC kapalıysa yereldeki projeler yönetilemez. Worker’ı evden başlatmak artık mümkün değil; dönüşte:</p>
       <pre>irm 'https://cursor.com/install?win32=true' | iex
 agent login
 cd E:\proje-klasoru
