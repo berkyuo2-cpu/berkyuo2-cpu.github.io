@@ -1,0 +1,25 @@
+body{font-family:system-ui,sans-serif;max-width:720px;margin:48px auto;padding:0 20px;color:#15231d;line-height:1.6;background:#f8faf9}
+main{background:#fff;border:1px solid #dce5e0;border-radius:18px;padding:28px;box-shadow:0 10px 28px #183d2d12}
+h1{margin-top:0;font-size:28px}
+h2{font-size:20px;margin-top:28px}
+h3{font-size:16px;margin:0 0 8px}
+a{color:#176b57}
+.muted,.eyebrow{color:#607068}
+.eyebrow{margin:0 0 8px;font-size:13px;letter-spacing:.02em;text-transform:uppercase}
+.status,.steps{padding-left:1.2em}
+.status li,.steps li{margin:8px 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.btn{display:inline-block;padding:12px 16px;border-radius:12px;border:1px solid #c5d5cd;text-decoration:none;color:#14352b;background:#f3f7f5;font-weight:600;min-height:44px;box-sizing:border-box}
+.btn.primary{background:#176b57;color:#fff;border-color:#176b57}
+.cards{display:grid;gap:10px}
+.card{display:block;padding:14px 16px;border:1px solid #dce5e0;border-radius:12px;text-decoration:none;color:#15231d;background:#f8faf9}
+.templates article{margin:12px 0;padding:14px;border:1px solid #dce5e0;border-radius:12px;background:#f8faf9}
+pre{white-space:pre-wrap;word-break:break-word;background:#14352b;color:#e7f3ee;padding:12px;border-radius:10px;font-size:13px}
+button{min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid #c5d5cd;background:#fff;font-weight:600;color:#14352b}
+.copied{color:#176b57}
+code{font-size:.95em}
+@media (max-width:640px){
+  body{margin:16px auto}
+  main{padding:20px;border-radius:14px}
+  .btn{flex:1 1 100%;text-align:center}
+}

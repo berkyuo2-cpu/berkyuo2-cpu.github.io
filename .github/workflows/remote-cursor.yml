@@ -1,0 +1,63 @@
+name: Remote Cursor
+
+on:
+  workflow_dispatch:
+    inputs:
+      islem:
+        description: "İşlem (launch / followup / list)"
+        type: choice
+        options:
+          - launch
+          - followup
+          - list
+        default: launch
+      prompt:
+        description: "Görev metni (launch ve followup)"
+        required: false
+        type: string
+      repository:
+        description: "GitHub repo URL"
+        required: false
+        default: https://github.com/berkyuo2-cpu/berkyuo2-cpu.github.io
+        type: string
+      agent_id:
+        description: "Follow-up için ajan kimliği (bc-...)"
+        required: false
+        type: string
+      auto_create_pr:
+        description: "İş bitince PR aç"
+        type: boolean
+        default: true
+      mode:
+        description: "agent = uygula, plan = sadece planla"
+        type: choice
+        options:
+          - agent
+          - plan
+        default: agent
+
+permissions:
+  contents: read
+
+jobs:
+  remote-cursor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Cursor Cloud Agents API
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+          CURSOR_REMOTE_ACTION: ${{ inputs.islem }}
+          CURSOR_REMOTE_PROMPT: ${{ inputs.prompt }}
+          CURSOR_REMOTE_REPOSITORY: ${{ inputs.repository }}
+          CURSOR_REMOTE_AGENT_ID: ${{ inputs.agent_id }}
+          CURSOR_REMOTE_AUTO_CREATE_PR: ${{ inputs.auto_create_pr }}
+          CURSOR_REMOTE_MODE: ${{ inputs.mode }}
+        run: node scripts/remote-cursor.mjs
