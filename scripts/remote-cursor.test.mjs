@@ -217,6 +217,9 @@ test("kumanda page keeps official launch paths and does not ask for API keys", (
   assert.match(html, /https:\/\/github\.com\/berkyuo2-cpu\/berkyuo2-cpu\.github\.io\/actions\/workflows\/remote-cursor\.yml/);
   assert.doesNotMatch(html, /<input[^>]+type="password"/i);
   assert.match(html, /noindex/);
+  assert.match(html, /id="copy-live"/);
+  const appJs = fs.readFileSync(path.resolve("kumanda/app.js"), "utf8");
+  assert.match(appJs, /function fallbackCopy/);
   assert.match(workflow, /secrets\.CURSOR_API_KEY/);
   assert.doesNotMatch(workflow, /echo \$\{?CURSOR_API_KEY/);
 });

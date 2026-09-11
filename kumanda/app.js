@@ -1,15 +1,49 @@
 const GITHUB_REPOS_URL =
   "https://api.github.com/users/berkyuo2-cpu/repos?sort=updated&per_page=20";
 
+function fallbackCopy(text) {
+  const field = document.createElement("textarea");
+  field.value = text;
+  field.setAttribute("readonly", "");
+  field.style.position = "fixed";
+  field.style.left = "-9999px";
+  document.body.append(field);
+  field.select();
+  const ok = document.execCommand("copy");
+  field.remove();
+  if (!ok) {
+    throw new Error("execCommand copy failed");
+  }
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch {
+      fallbackCopy(text);
+      return;
+    }
+  }
+  fallbackCopy(text);
+}
+
 function setCopyState(button, ok) {
   const original = button.dataset.label || button.textContent;
   button.dataset.label = original;
   button.textContent = ok ? "Kopyalandı" : "Kopyalanamadı";
   button.classList.toggle("copied", ok);
+  const live = document.getElementById("copy-live");
+  if (live) {
+    live.textContent = ok
+      ? "Metin panoya kopyalandı."
+      : "Kopyalama başarısız. Metni uzun basıp elle kopyala.";
+  }
   window.setTimeout(() => {
     button.textContent = original;
     button.classList.remove("copied");
-  }, 1600);
+  }, 4000);
 }
 
 async function copyTemplate(button) {
@@ -21,7 +55,7 @@ async function copyTemplate(button) {
     return;
   }
   try {
-    await navigator.clipboard.writeText(text);
+    await copyText(text);
     setCopyState(button, true);
   } catch {
     setCopyState(button, false);
@@ -62,12 +96,19 @@ async function loadPublicRepos() {
   }
 }
 
-document.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-copy]");
-  if (!button) {
-    return;
+function bindCopyButtons() {
+  const buttons = document.querySelectorAll("button[data-copy]");
+  for (const button of buttons) {
+    button.addEventListener("click", () => {
+      copyTemplate(button);
+    });
   }
-  copyTemplate(button);
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bindCopyButtons);
+} else {
+  bindCopyButtons();
+}
 
 loadPublicRepos();

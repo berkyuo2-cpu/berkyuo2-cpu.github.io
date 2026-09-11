@@ -17,6 +17,7 @@ a{color:#176b57}
 pre{white-space:pre-wrap;word-break:break-word;background:#14352b;color:#e7f3ee;padding:12px;border-radius:10px;font-size:13px}
 button{min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid #c5d5cd;background:#fff;font-weight:600;color:#14352b}
 .copied{color:#176b57}
+#copy-live{min-height:1.5em;font-weight:600}
 code{font-size:.95em}
 @media (max-width:640px){
   body{margin:16px auto}
